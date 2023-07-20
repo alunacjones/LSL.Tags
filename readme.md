@@ -4,7 +4,7 @@
 
 # LSL.Tags
 
-This package prvides a static class to build an enumerable list of strings that represent tags.
+This package provides a static class to build an enumerable list of strings that represent tags.
 
 ## Quick Start
 
