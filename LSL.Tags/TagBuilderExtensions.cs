@@ -40,6 +40,6 @@ namespace LSL.Tags
         public static TagBuilder ApplicationTagForAssemblyOf<T>(this TagBuilder source, string tagKey = ApplicationKey) =>
             source.ApplicationTagForAssemblyOfType(typeof(T));
 
-        private static string EncodeStringForKeyOrValue(string encodee) => encodee.Replace(":", "%3a");            
+        private static string EncodeStringForKeyOrValue(string encodee) => encodee.Replace("%", "%25").Replace(":", "%3a");            
     }
 }

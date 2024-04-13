@@ -42,4 +42,20 @@ var tags7 = BuildTags.Empty();
 // this will return an empty tag list as we have explicitly asked for it
 // NOTE: Enumerable.Empty<string>() could also be used here
 
+// Setting an application tag using the Assembly name of a given type:
+var tags = BuildTags.ApplicationTagForAssemblyOfType(typeof(Program))
+    .Build();
+// tags will contain ["Application:MyAssemblyName"]
+// NOTE: This assumes the name of the assemby containing Program is called MyAssemblyName
+
+// Setting an application tag using the Assembly name of a given type:
+var tags = BuildTags.ApplicationTagForAssemblyOf<Program>()
+    .Build();    
+// tags will contain ["Application:MyAssemblyName"]
+// NOTE: This assumes the name of the assemby containing Program is called MyAssemblyName
+
+// Parsing an encoded key/value tag
+var keyValuePair = TagBuilder.Parse("my-key:my-value");
+// keyValuePair.Key == "my-key"
+// keyValuePair.Value == "my-value"
 ```

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -73,6 +74,7 @@ namespace LSL.Tags.Tests
         [TestCase("my:key", "my-value", "my%3akey:my-value")]
         [TestCase("my-key", "my:value", "my-key:my%3avalue")]
         [TestCase("my:key", "my:value", "my%3akey:my%3avalue")]
+        [TestCase("my:key%", "%my:value", "my%3akey%25:%25my%3avalue")]
         public void GivenAKeyValueTag_ThenItShouldReturnTheExpectedList(string key, string value, string expectedResult)
         {
             BuildTags.With.KeyAndValueTag(key, value).Build()
@@ -106,5 +108,16 @@ namespace LSL.Tags.Tests
                     "Application:LSL.Tags.Tests"
                 });
         }        
+
+        [TestCase("key:value", "key", "value")]
+        [TestCase("my%3akey:value", "my:key", "value")]
+        [TestCase("my%3akey:value%3a1", "my:key", "value:1")]
+        [TestCase("my%3akey%25:%25value%3a1", "my:key%", "%value:1")]
+        public void Parse_GivenAnEncodedKeyValueTag_ThenItShouldReturnTheExpectedResult(string encodedValue, string expectedKey, string expectedValue)
+        {
+            TagBuilder.ParseKeyAndValue(encodedValue)
+                .Should()
+                .BeEquivalentTo(new KeyValuePair<string, string> (expectedKey, expectedValue));
+        }
     }
 }
